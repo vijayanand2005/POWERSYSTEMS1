@@ -1,0 +1,40 @@
+clc;
+clear;
+
+% Input number of nodes and elements
+n = input('Enter the number of nodes: ');
+e = input('Enter the number of elements: ');
+
+% Initialize incidence matrix
+A = zeros(e, n);
+
+% Input from and to nodes
+for i = 1:e
+    fprintf('\n--- Element %d ---\n', i);
+    
+    from = input('Enter FROM node: ');
+    to   = input('Enter TO node: ');
+    
+    % Validate input
+    if from > n || to > n || from < 1 || to < 1
+        error('Invalid node number! Must be between 1 and %d', n);
+    end
+    
+    % Assign values
+    A(i, from) = 1;    % Leaving node
+    A(i, to)   = -1;   % Entering node
+end
+
+% Display full matrix
+fprintf('\nFull Bus Incidence Matrix:\n');
+disp(A);
+
+% Reference node
+ref = input('\nEnter reference node: ');
+
+% Reduced matrix
+A_reduced = A;
+A_reduced(:, ref) = [];
+
+fprintf('\nReduced Bus Incidence Matrix:\n');
+disp(A_reduced);
